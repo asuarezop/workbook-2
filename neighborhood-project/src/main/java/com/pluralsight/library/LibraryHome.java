@@ -104,12 +104,12 @@ public class LibraryHome {
                     ======================================================================================        
                     """;
        do {
-           System.out.print(availableBooksScreen);
+           System.out.println(availableBooksScreen + "\n");
 
         //For Each loop to show only the books that have not been checked out yet w/ ID, ISBN, and Title
         for (Book book: books) {
             if (!book.isCheckedOut()) {
-                System.out.println(book.getId() + book.getIsbn() + book.getBookTitle());
+                System.out.println(book.getId() + " " + book.getIsbn() + " " + book.getBookTitle() + "\n");
             }
         }
 
@@ -118,7 +118,7 @@ public class LibraryHome {
 
         switch (userInput) {
             case "C", "c":
-                System.out.println("Please enter your first and last name to check out a book: ");
+                System.out.println("\nPlease enter your first and last name to check out a book: ");
                 fullName = inputSc.nextLine().trim();
                 //Have to call checkOut method from Book class and have isCheckedOut property updated to value for fullName
                 break;
@@ -170,12 +170,12 @@ public class LibraryHome {
                     """;
 
         do {
-            System.out.print(checkedOutBooksScreen);
+            System.out.println(checkedOutBooksScreen + "\n");
 
             //Printing out all books that are checked out to user with ID, ISBN, Title, and Name of Person who checked out book
             for (Book book: books) {
                 if (book.isCheckedOut()) {
-                    System.out.println(book.getId() + book.getIsbn() + book.getBookTitle() + book.getCheckedOutTo());
+                    System.out.println(book.getId() + " " + book.getIsbn() + " " + book.getBookTitle() + " " + book.getCheckedOutTo() + "\n");
                 }
             }
 
