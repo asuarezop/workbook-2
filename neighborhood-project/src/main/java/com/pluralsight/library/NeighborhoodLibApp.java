@@ -1,7 +1,7 @@
 package com.pluralsight.library;
 import java.util.Scanner;
 
-public class LibraryHome {
+public class NeighborhoodLibApp {
     //Declaring public static method on Scanner will make it available on all methods inside LibraryHome
     public static Scanner inputSc;
 
