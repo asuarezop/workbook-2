@@ -136,7 +136,7 @@ public class NeighborhoodLibApp {
                     for (Book book: books) {
                         if (parsedBookID == book.getId()) {
                             book.checkOut(fullName);
-                            System.out.println("You have checked out book: " + bookActionSuccessColor + italicText + book.getBookTitle() + resetText + bookAvailableBooksScreenColor + "\nHave a nice day! :)");
+                            System.out.println("You have checked out book: " + bookActionSuccessColor + italicText + book.getBookTitle() + resetText + bookAvailableBooksScreenColor + "\nHave a nice day, " + book.getCheckedOutTo() + "!");
                         }
                     }
                 } else {
