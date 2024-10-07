@@ -32,12 +32,16 @@ public class Book {
         return isCheckedOut;
     }
 
+    public void setCheckedOut(boolean checkedOut) {
+        isCheckedOut = checkedOut;
+    }
+
     public String getCheckedOutTo() {
         return checkedOutTo;
     }
 
-    //Methods for book
-    public static void checkOut(String name){}
+    //Methods for book (have to be non-static)
+    public void checkOut(String name){}
 
-    public static void checkIn(){}
+    public void checkIn(){}
 }

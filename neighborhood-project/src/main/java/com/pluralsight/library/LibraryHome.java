@@ -14,6 +14,16 @@ public class LibraryHome {
 
     public static boolean exitMenu;
 
+    //Terminal variables for coloring text
+    public static String escapeKey = "\033";
+    public static String bookIdTextColor = escapeKey + "[1;34m";
+    public static String bookISBNTextColor = escapeKey + "[38;5;112m";
+    public static String bookTitleTextColor = escapeKey + "[38;5;51m";
+    public static String bookCheckOutTextColor = escapeKey + "[38;5;11m";
+    public static String bookHomeScreenColor = escapeKey + "[38;5;189m";
+    public static String bookAvailableBooksScreenColor = escapeKey + "[38;5;214m";
+    public static String bookCheckedOutBooksScreenColor = escapeKey + "[38;5;195m";
+
     public static void main(String[] args) {
         inputSc = new Scanner(System.in);
 
@@ -51,20 +61,17 @@ public class LibraryHome {
                     ======================================================================================
                     |                   * * * WELCOME TO THE NEIGHBORHOOD LIBRARY * * *                  |
                     |                                                                                    |
-                    |                      -  What would you like to do today?                           |
+                    |                       -  What would you like to do today?                          |
                     |                                                                                    |
                     |                            1. Show Available Books                                 |
                     |                            2. Show Checked Out Books                               |
                     |                                                                                    |
-                    |                                                                                    |
-                    |                                                                                    |
-                    |                              Hit ESC to exit menu                                  |
-                    |                                                                                    |
+                    |                               Hit ESC to exit menu                                 |
                     ======================================================================================        
                     """;
 
         do {
-            System.out.print(homeScreen);
+            System.out.print(bookHomeScreenColor + homeScreen + "Selection 1 or 2? : ");
             userInput = inputSc.nextLine().trim();
 
             switch(userInput) {
@@ -74,14 +81,13 @@ public class LibraryHome {
                 case "2":
                     showCheckedOutBooks();
                     break;
-                case "ESC":
+                case "\033":
                     exitMenu = true;
                     break;
                 default:
                     throw new Error("Sorry, that's not a valid option. Please make your selection.");
             }
         } while (!exitMenu);
-
 
     }
 
@@ -93,39 +99,44 @@ public class LibraryHome {
                     |                   * * * AVAILABLE BOOKS (NOT CHECKED OUT) * * *                    |
                     |                                                                                    |
                     |                                                                                    |
-                    |                                                                                    |
                     |                             C. Check Out A Book                                    |
                     |                             X. Go Back to Home Screen                              |
-                    |                                                                                    |
-                    |                                                                                    |
                     |                                                                                    |
                     |                               Hit ESC to exit menu                                 |
                     |                                                                                    |
                     ======================================================================================        
                     """;
        do {
-           System.out.println(availableBooksScreen + "\n");
 
         //For Each loop to show only the books that have not been checked out yet w/ ID, ISBN, and Title
         for (Book book: books) {
             if (!book.isCheckedOut()) {
-                System.out.println(book.getId() + " " + book.getIsbn() + " " + book.getBookTitle() + "\n");
+                System.out.println(bookIdTextColor + "Book ID: " + book.getId() + bookISBNTextColor + " Book ISBN: " + book.getIsbn() + bookTitleTextColor + " Book Title: " + book.getBookTitle());
             }
         }
 
+        System.out.print(bookAvailableBooksScreenColor + availableBooksScreen + "Selection C or X? : ");
+
         userInput = inputSc.nextLine().trim();
-        String fullName = "";
+        String fullName;
+        String userBookSelection;
 
         switch (userInput) {
             case "C", "c":
                 System.out.println("\nPlease enter your first and last name to check out a book: ");
                 fullName = inputSc.nextLine().trim();
                 //Have to call checkOut method from Book class and have isCheckedOut property updated to value for fullName
+                if (!fullName.isEmpty()) {
+                    //Have to get user to type what book they want to check out by either prompting for book Title
+                    System.out.println("What is the name of the book you'd like to check out?: ");
+                } else {
+                    throw new Error("Invalid name");
+                }
                 break;
             case "X", "x":
                 LibraryMenuSelection();
                 break;
-            case "ESC":
+            case "\033":
                 exitMenu = true;
                 break;
             default:
@@ -158,26 +169,23 @@ public class LibraryHome {
                     |                            * * * CHECKED OUT BOOKS * * *                           |
                     |                                                                                    |
                     |                                                                                    |
+                    |                              C. Check In A Book                                    |
+                    |                              X. Go Back to Home Screen                             |
                     |                                                                                    |
-                    |                               C. Check In A Book                                   |
-                    |                               X. Go Back to Home Screen                            |
-                    |                                                                                    |
-                    |                                                                                    |
-                    |                                                                                    |
-                    |                                Hit ESC to exit menu                                |
+                    |                                 Hit ESC to exit menu                               |
                     |                                                                                    |
                     ======================================================================================        
                     """;
 
         do {
-            System.out.println(checkedOutBooksScreen + "\n");
 
             //Printing out all books that are checked out to user with ID, ISBN, Title, and Name of Person who checked out book
             for (Book book: books) {
                 if (book.isCheckedOut()) {
-                    System.out.println(book.getId() + " " + book.getIsbn() + " " + book.getBookTitle() + " " + book.getCheckedOutTo() + "\n");
+                    System.out.println(bookIdTextColor + "Book ID: " + book.getId() + bookISBNTextColor + " Book ISBN: " + book.getIsbn() + bookTitleTextColor + " Book Title: " + book.getBookTitle() + bookCheckOutTextColor + " Checked Out To: " + book.getCheckedOutTo());
                 }
             }
+            System.out.print(bookCheckedOutBooksScreenColor + checkedOutBooksScreen + "Selection C or X: ");
 
             userInput = inputSc.nextLine().trim();
 
@@ -187,7 +195,7 @@ public class LibraryHome {
                 case "X", "x":
                     LibraryMenuSelection();
                     break;
-                case "ESC":
+                case "\033":
                     exitMenu = true;
                     break;
                 default:
