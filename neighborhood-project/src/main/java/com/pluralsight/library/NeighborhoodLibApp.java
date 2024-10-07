@@ -64,7 +64,7 @@ public class NeighborhoodLibApp {
                     |                            1. Show Available Books                                 |
                     |                            2. Show Checked Out Books                               |
                     |                                                                                    |
-                    |                               Hit ESC to exit menu                                 |
+                    |                               Hit Q to exit menu                                   |
                     ======================================================================================        
                     """;
 
@@ -79,7 +79,7 @@ public class NeighborhoodLibApp {
                 case "2":
                     showCheckedOutBooks();
                     break;
-                case "\033":
+                case "Q", "q":
                     exitMenu = true;
                     break;
                 default:
@@ -99,7 +99,7 @@ public class NeighborhoodLibApp {
                     |                             C. Check Out A Book                                    |
                     |                             X. Go Back to Home Screen                              |
                     |                                                                                    |
-                    |                               Hit ESC to exit menu                                 |
+                    |                               Hit Q to exit menu                                   |
                     |                                                                                    |
                     ======================================================================================        
                     """;
@@ -141,7 +141,7 @@ public class NeighborhoodLibApp {
             case "X", "x":
                 LibraryMenuSelection();
                 break;
-            case "\033":
+            case "Q", "q":
                 exitMenu = true;
                 break;
             default:
@@ -161,7 +161,7 @@ public class NeighborhoodLibApp {
                     |                              C. Check In A Book                                    |
                     |                              X. Go Back to Home Screen                             |
                     |                                                                                    |
-                    |                                 Hit ESC to exit menu                               |
+                    |                                 Hit Q to exit menu                                 |
                     |                                                                                    |
                     ======================================================================================        
                     """;
@@ -202,7 +202,7 @@ public class NeighborhoodLibApp {
                 case "X", "x":
                     LibraryMenuSelection();
                     break;
-                case "\033":
+                case "Q", "q":
                     exitMenu = true;
                     break;
                 default:
