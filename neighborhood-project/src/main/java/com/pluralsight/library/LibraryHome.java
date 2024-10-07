@@ -1,5 +1,4 @@
 package com.pluralsight.library;
-
 import java.util.Scanner;
 
 public class LibraryHome {
@@ -9,9 +8,8 @@ public class LibraryHome {
     //Declaring an array of book objects
     public static Book[] books;
 
-    //User input available for all methods
+    //Control input methods
     public static String userInput;
-
     public static boolean exitMenu;
 
     //Terminal variables for coloring text
@@ -88,7 +86,6 @@ public class LibraryHome {
                     throw new Error("Sorry, that's not a valid option. Please make your selection.");
             }
         } while (!exitMenu);
-
     }
 
     public static void showAvailableBooks(){
@@ -107,7 +104,6 @@ public class LibraryHome {
                     ======================================================================================        
                     """;
        do {
-
         //For Each loop to show only the books that have not been checked out yet w/ ID, ISBN, and Title
         for (Book book: books) {
             if (!book.isCheckedOut()) {
@@ -116,19 +112,28 @@ public class LibraryHome {
         }
 
         System.out.print(bookAvailableBooksScreenColor + availableBooksScreen + "Selection C or X? : ");
-
         userInput = inputSc.nextLine().trim();
+
+        //Storing user's name and book selection for check out option
         String fullName;
         String userBookSelection;
 
         switch (userInput) {
             case "C", "c":
-                System.out.println("\nPlease enter your first and last name to check out a book: ");
+                System.out.print("\nPlease enter your first and last name to check out a book: ");
                 fullName = inputSc.nextLine().trim();
-                //Have to call checkOut method from Book class and have isCheckedOut property updated to value for fullName
+                //If the user's input for fullName is not empty
                 if (!fullName.isEmpty()) {
-                    //Have to get user to type what book they want to check out by either prompting for book Title
-                    System.out.println("What is the name of the book you'd like to check out?: ");
+                    //Prompting user for the name of the book they'd like to check out
+                    System.out.print("What is the name of the book you'd like to check out? (full book title): ");
+                    userBookSelection = inputSc.nextLine().trim();
+                    //Filter books array again for the book title that user typed and update checkedOutTo, isCheckedOut properties on that book
+                    for (Book book: books) {
+                        if (!userBookSelection.isEmpty() && book.getBookTitle().equals(userBookSelection)) {
+                            book.checkOut(fullName);
+                            book.setCheckedOut(true);
+                        }
+                    }
                 } else {
                     throw new Error("Invalid name");
                 }
@@ -143,26 +148,10 @@ public class LibraryHome {
                 throw new Error("Sorry, that's not a valid option. Please make your selection.");
         }
        } while (!exitMenu);
-
-        //Prompt user to select a book to check out:
-                /*
-                     Menu display for all available books
-
-
-                      Switch statement to confirm book selection based on id of book
-                     Actions: //C - Check Out A Book
-                                    --> Prompt user for the name of book (title)
-                                    --> Prompt user for their name (first, last)
-                                    --> Update isCheckedOut property on book they selected
-                              //X - Go back to Home Screen
-                 */
-        //Menu can repeat itself by asking user if they'd like to check out another book: Y/N
-
-        //If user wants to exit, break out of switch statement loop
     }
 
     public static void showCheckedOutBooks() {
-        //Console output to for all checked out books with their properties
+        //Console output for all checked out books with their properties
         exitMenu = false;
         String checkedOutBooksScreen = """
                     ======================================================================================
@@ -178,7 +167,6 @@ public class LibraryHome {
                     """;
 
         do {
-
             //Printing out all books that are checked out to user with ID, ISBN, Title, and Name of Person who checked out book
             for (Book book: books) {
                 if (book.isCheckedOut()) {
@@ -186,12 +174,31 @@ public class LibraryHome {
                 }
             }
             System.out.print(bookCheckedOutBooksScreenColor + checkedOutBooksScreen + "Selection C or X: ");
-
             userInput = inputSc.nextLine().trim();
+
+            //Storing user input for check out option
+            String userBookId;
+            int parsedBookId;
 
             switch (userInput) {
                 case "C", "c":
-                    checkInBook();
+                    //Console output to ask user for id of book they'd like to check in
+                    System.out.print("What is the ID of the book you'd like to check in? (digits only): ");
+                    userBookId = inputSc.nextLine().trim();
+
+                    //If the user's input for userBookId is not empty
+                    if(!userBookId.isEmpty()) {
+                        //Parse user input to an integer
+                        parsedBookId = Integer.parseInt(userBookId);
+
+                        //Filter through books array for the book that matches user's input
+                        for (Book book: books) {
+                            if(book.getId() == parsedBookId) {
+                                book.checkIn();
+                                book.setCheckedOut(false);
+                            }
+                        }
+                    }
                 case "X", "x":
                     LibraryMenuSelection();
                     break;
@@ -202,17 +209,5 @@ public class LibraryHome {
                     throw new Error("Sorry, that's not a valid option. Please make your selection.");
             }
         } while (!exitMenu);
-
-        //Prompt user if they want to continue to check in a book or go back to main menu
-
-        //Have menu persist with a switch statement + do-while loop until a chosen action is taken
-        //C - Check in a book
-        //X - Go back to Home screen
-    }
-
-    public static void checkInBook(){
-        //Console output to ask user for id of book they'd like to check in
-
-        //Update isCheckedOut to false and checkedOutTo to "" (empty string)
     }
 }

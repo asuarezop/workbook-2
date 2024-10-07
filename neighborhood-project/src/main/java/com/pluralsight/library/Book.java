@@ -40,8 +40,17 @@ public class Book {
         return checkedOutTo;
     }
 
-    //Methods for book (have to be non-static)
-    public void checkOut(String name){}
+    public void setCheckedOutTo(String checkedOutTo) {
+        this.checkedOutTo = checkedOutTo;
+    }
 
-    public void checkIn(){}
+    //Methods for book (have to be non-static)
+    public void checkOut(String name){
+        setCheckedOutTo(name);
+
+    }
+
+    public void checkIn(){
+        setCheckedOutTo("");
+    }
 }
