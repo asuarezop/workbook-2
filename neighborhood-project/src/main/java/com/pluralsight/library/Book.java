@@ -47,10 +47,11 @@ public class Book {
     //Methods for book (have to be non-static)
     public void checkOut(String name){
         setCheckedOutTo(name);
-
+        setCheckedOut(true);
     }
 
     public void checkIn(){
         setCheckedOutTo("");
+        setCheckedOut(false);
     }
 }

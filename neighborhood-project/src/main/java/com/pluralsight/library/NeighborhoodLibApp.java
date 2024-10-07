@@ -14,10 +14,13 @@ public class NeighborhoodLibApp {
 
     //Terminal variables for coloring text
     public static String escapeKey = "\033";
+    public static String italicText = escapeKey + "[3m";
+    public static String resetText = escapeKey + "[23m";
     public static String bookIdTextColor = escapeKey + "[1;34m";
     public static String bookISBNTextColor = escapeKey + "[38;5;112m";
     public static String bookTitleTextColor = escapeKey + "[38;5;51m";
     public static String bookCheckOutTextColor = escapeKey + "[38;5;11m";
+    public static String bookActionSuccessColor = escapeKey + "[38;5;15m";
     public static String bookHomeScreenColor = escapeKey + "[38;5;189m";
     public static String bookAvailableBooksScreenColor = escapeKey + "[38;5;214m";
     public static String bookCheckedOutBooksScreenColor = escapeKey + "[38;5;195m";
@@ -117,6 +120,7 @@ public class NeighborhoodLibApp {
         //Storing user's name and book selection for check out option
         String fullName;
         String userBookSelection;
+        int parsedBookID;
 
         switch (userInput) {
             case "C", "c":
@@ -125,13 +129,14 @@ public class NeighborhoodLibApp {
                 //If the user's input for fullName is not empty
                 if (!fullName.isEmpty()) {
                     //Prompting user for the name of the book they'd like to check out
-                    System.out.print("What is the name of the book you'd like to check out? (full book title): ");
+                    System.out.print("What is the book ID for the book you'd like to check out? (digits only): ");
                     userBookSelection = inputSc.nextLine().trim();
+                    parsedBookID = Integer.parseInt(userBookSelection);
                     //Filter books array again for the book title that user typed and update checkedOutTo, isCheckedOut properties on that book
                     for (Book book: books) {
-                        if (!userBookSelection.isEmpty() && book.getBookTitle().equals(userBookSelection)) {
+                        if (parsedBookID == book.getId()) {
                             book.checkOut(fullName);
-                            book.setCheckedOut(true);
+                            System.out.println("You have checked out book: " + bookActionSuccessColor + italicText + book.getBookTitle() + resetText + bookAvailableBooksScreenColor + "\nHave a nice day! :)");
                         }
                     }
                 } else {
@@ -195,7 +200,7 @@ public class NeighborhoodLibApp {
                         for (Book book: books) {
                             if(book.getId() == parsedBookId) {
                                 book.checkIn();
-                                book.setCheckedOut(false);
+                                System.out.println("You have checked in: " + bookActionSuccessColor + italicText + book.getBookTitle() + resetText + bookCheckedOutBooksScreenColor + "\nHave a nice day! :)");
                             }
                         }
                     }
